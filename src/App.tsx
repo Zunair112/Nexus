@@ -28,7 +28,7 @@ import { HelpPage } from './pages/help/HelpPage';
 import { DealsPage } from './pages/deals/DealsPage';
 
 // Calendar Component - Import the actual Calendar component from calendar folder
-import {Calendar} from "./pages/calendar/Calendar";
+import {Calendar} from "./pages/calendar/calendar";
 
 
 // Chat Pages
