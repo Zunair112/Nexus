@@ -23,13 +23,16 @@ import { EntrepreneursPage } from './pages/entrepreneurs/EntrepreneursPage';
 import { MessagesPage } from './pages/messages/MessagesPage';
 import { NotificationsPage } from './pages/notifications/NotificationsPage';
 import { DocumentsPage } from './pages/documents/DocumentsPage';
+import { DocumentChamberPage } from './pages/documentchamber/DocumentChamberPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { HelpPage } from './pages/help/HelpPage';
 import { DealsPage } from './pages/deals/DealsPage';
 
-// Calendar Component - Import the actual Calendar component from calendar folder
-import {Calendar} from "./pages/calendar/calendar";
+// Calendar Pages
+import { CalendarPage } from './pages/calendar/calendar';
 
+// Video Call Pages
+import { VideoCallPage } from './pages/video/VideoCallPage';
 
 // Chat Pages
 import { ChatPage } from './pages/chat/ChatPage';
@@ -53,6 +56,22 @@ function App() {
           <Route path="/profile" element={<DashboardLayout />}>
             <Route path="entrepreneur/:id" element={<EntrepreneurProfile />} />
             <Route path="investor/:id" element={<InvestorProfile />} />
+          </Route>
+          
+          {/* Calendar Routes */}
+          <Route path="/calendar" element={<DashboardLayout />}>
+            <Route index element={<CalendarPage />} />
+          </Route>
+          
+          {/* Video Call Routes */}
+          <Route path="/video-call" element={<DashboardLayout />}>
+            <Route index element={<VideoCallPage />} />
+            <Route path=":callId" element={<VideoCallPage />} />
+          </Route>
+          
+          {/* Document Chamber Routes */}
+          <Route path="/document-chamber" element={<DashboardLayout />}>
+            <Route index element={<DocumentChamberPage />} />
           </Route>
           
           {/* Feature Routes */}
@@ -86,11 +105,6 @@ function App() {
           
           <Route path="/deals" element={<DashboardLayout />}>
             <Route index element={<DealsPage />} />
-          </Route>
-          
-          {/* Calendar Routes - Updated to use Calendar component */}
-          <Route path="/calendar" element={<DashboardLayout />}>
-            <Route index element={<Calendar />} />
           </Route>
           
           {/* Chat Routes */}
