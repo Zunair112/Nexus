@@ -28,6 +28,9 @@ import { SettingsPage } from './pages/settings/SettingsPage';
 import { HelpPage } from './pages/help/HelpPage';
 import { DealsPage } from './pages/deals/DealsPage';
 
+// Payment Pages
+import { PaymentPage } from './pages/payment/payment';
+
 // Calendar Pages
 import { CalendarPage } from './pages/calendar/calendar';
 
@@ -56,6 +59,11 @@ function App() {
           <Route path="/profile" element={<DashboardLayout />}>
             <Route path="entrepreneur/:id" element={<EntrepreneurProfile />} />
             <Route path="investor/:id" element={<InvestorProfile />} />
+          </Route>
+          
+          {/* Payment Routes */}
+          <Route path="/payments" element={<DashboardLayout />}>
+            <Route index element={<PaymentPage />} />
           </Route>
           
           {/* Calendar Routes */}
