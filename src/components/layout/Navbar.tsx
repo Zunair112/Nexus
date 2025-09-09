@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Menu, X, Bell, MessageCircle, User, LogOut, Building2, CircleDollarSign, Calendar, Video, FileText, Wallet } from 'lucide-react';
+import { 
+  Menu, X, Bell, MessageCircle, User, LogOut, Building2, 
+  CircleDollarSign, Calendar, Video, FileText, Wallet, Shield, Settings 
+} from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Avatar } from '../ui/Avatar';
 import { Button } from '../ui/Button';
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
   };
   
   const handleLogout = () => {
@@ -64,11 +72,25 @@ export const Navbar: React.FC = () => {
       icon: <Bell size={18} />,
       text: 'Notifications',
       path: user ? '/notifications' : '/login',
-    },
+    }
+  ];
+
+  // User dropdown menu items
+  const userMenuItems = [
     {
-      icon: <User size={18} />,
+      icon: <User size={16} />,
       text: 'Profile',
       path: profileRoute,
+    },
+    {
+      icon: <Settings size={16} />,
+      text: 'Settings',
+      path: user ? '/settings' : '/login',
+    },
+    {
+      icon: <Shield size={16} />,
+      text: 'Security',
+      path: user ? '/settings/security' : '/login',
     }
   ];
   
@@ -104,23 +126,54 @@ export const Navbar: React.FC = () => {
                   </Link>
                 ))}
                 
-                <Button 
-                  variant="ghost"
-                  onClick={handleLogout}
-                  leftIcon={<LogOut size={18} />}
-                >
-                  Logout
-                </Button>
-                
-                <Link to={profileRoute} className="flex items-center space-x-2 ml-2">
-                  <Avatar
-                    src={user.avatarUrl}
-                    alt={user.name}
-                    size="sm"
-                    status={user.isOnline ? 'online' : 'offline'}
-                  />
-                  <span className="text-sm font-medium text-gray-700">{user.name}</span>
-                </Link>
+                {/* User Menu Dropdown */}
+                <div className="relative">
+                  <button 
+                    onClick={toggleUserMenu}
+                    className="flex items-center space-x-2 ml-2 p-2 rounded-md hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <Avatar
+                      src={user.avatarUrl}
+                      alt={user.name}
+                      size="sm"
+                      status={user.isOnline ? 'online' : 'offline'}
+                    />
+                    <span className="text-sm font-medium text-gray-700">{user.name}</span>
+                  </button>
+                  
+                  {/* Dropdown Menu */}
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                      <div className="px-4 py-2 border-b border-gray-100">
+                        <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                        <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+                      </div>
+                      
+                      {userMenuItems.map((item, index) => (
+                        <Link
+                          key={index}
+                          to={item.path}
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <span className="mr-3">{item.icon}</span>
+                          {item.text}
+                        </Link>
+                      ))}
+                      
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setIsUserMenuOpen(false);
+                        }}
+                        className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        <LogOut size={16} className="mr-3" />
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="flex items-center space-x-4">
@@ -182,6 +235,19 @@ export const Navbar: React.FC = () => {
                     </Link>
                   ))}
                   
+                  {/* User menu items in mobile */}
+                  {userMenuItems.map((item, index) => (
+                    <Link
+                      key={`mobile-${index}`}
+                      to={item.path}
+                      className="flex items-center px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <span className="mr-3">{item.icon}</span>
+                      {item.text}
+                    </Link>
+                  ))}
+                  
                   <button
                     onClick={() => {
                       handleLogout();
@@ -214,6 +280,14 @@ export const Navbar: React.FC = () => {
             )}
           </div>
         </div>
+      )}
+
+      {/* Click outside to close user menu */}
+      {isUserMenuOpen && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setIsUserMenuOpen(false)}
+        />
       )}
     </nav>
   );

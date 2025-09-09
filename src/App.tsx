@@ -9,6 +9,8 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 
+
+
 // Dashboard Pages
 import { EntrepreneurDashboard } from './pages/dashboard/EntrepreneurDashboard';
 import { InvestorDashboard } from './pages/dashboard/InvestorDashboard';
@@ -45,6 +47,9 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          {/* Security Demo Route - Standalone */}
+          <Route path="/security-demo" element={<SecurityAccessControl />} />
+          
           {/* Authentication Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -121,11 +126,11 @@ function App() {
             <Route path=":userId" element={<ChatPage />} />
           </Route>
           
-          {/* Redirect root to login */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Redirect root to security demo or login */}
+          <Route path="/" element={<Navigate to="/security-demo" replace />} />
           
-          {/* Catch all other routes and redirect to login */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          {/* Catch all other routes and redirect to security demo */}
+          <Route path="*" element={<Navigate to="/security-demo" replace />} />
         </Routes>
       </Router>
     </AuthProvider>

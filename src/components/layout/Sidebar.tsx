@@ -2,8 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
-  Home, Building2, CircleDollarSign, Users, MessageCircle, 
-  Bell, FileText, Settings, HelpCircle, Calendar, Video, Wallet
+  Building2, CircleDollarSign, Wallet, Calendar, Video, 
+  FileText, MessageCircle, Bell, Settings, Shield, HelpCircle
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -35,64 +35,120 @@ export const Sidebar: React.FC = () => {
   
   if (!user) return null;
   
-  // Define sidebar items based on user role
-  const entrepreneurItems = [
-    { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' },
-    { to: '/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
-    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
-    { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' },
-    { to: '/video-call', icon: <Video size={20} />, text: 'Video Call' },
-    { to: '/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
-    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
-    { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
-    { to: '/document-chamber', icon: <FileText size={20} />, text: 'Document Chamber' },
+  // Dashboard route based on role (matching Navbar logic)
+  const dashboardRoute = user?.role === 'entrepreneur' 
+    ? '/dashboard/entrepreneur' 
+    : '/dashboard/investor';
+  
+  // Profile route based on role and ID (matching Navbar logic)
+  const profileRoute = `/profile/${user.role}/${user.id}`;
+  
+  // Main navigation items (matching Navbar structure)
+  const mainNavItems = [
+    {
+      icon: user?.role === 'entrepreneur' ? <Building2 size={20} /> : <CircleDollarSign size={20} />,
+      text: 'Dashboard',
+      path: dashboardRoute,
+    },
+    {
+      icon: <Wallet size={20} />,
+      text: 'Payments',
+      path: '/payments',
+    },
+    {
+      icon: <Calendar size={20} />,
+      text: 'Calendar',
+      path: '/calendar',
+    },
+    {
+      icon: <Video size={20} />,
+      text: 'Video Call',
+      path: '/video-call',
+    },
+    {
+      icon: <FileText size={20} />,
+      text: 'Documents',
+      path: '/document-chamber',
+    },
+    {
+      icon: <MessageCircle size={20} />,
+      text: 'Messages',
+      path: '/messages',
+    },
+    {
+      icon: <Bell size={20} />,
+      text: 'Notifications',
+      path: '/notifications',
+    }
   ];
   
-  const investorItems = [
-    { to: '/dashboard/investor', icon: <Home size={20} />, text: 'Dashboard' },
-    { to: '/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
-    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
-    { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' },
-    { to: '/video-call', icon: <Video size={20} />, text: 'Video Call' },
-    { to: '/entrepreneurs', icon: <Users size={20} />, text: 'Find Startups' },
-    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
-    { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
-    { to: '/document-chamber', icon: <FileText size={20} />, text: 'Document Chamber' },
-    { to: '/deals', icon: <FileText size={20} />, text: 'Deals' },
-  ];
-  
-  const sidebarItems = user.role === 'entrepreneur' ? entrepreneurItems : investorItems;
-  
-  // Common items at the bottom
-  const commonItems = [
-    { to: '/settings', icon: <Settings size={20} />, text: 'Settings' },
-    { to: '/help', icon: <HelpCircle size={20} />, text: 'Help & Support' },
+  // Settings section items (matching Navbar user menu)
+  const settingsItems = [
+    {
+      icon: <Settings size={20} />,
+      text: 'Settings',
+      path: '/settings',
+    },
+    {
+      icon: <Shield size={20} />,
+      text: 'Security',
+      path: '/settings/security',
+    },
+    {
+      icon: <HelpCircle size={20} />,
+      text: 'Help & Support',
+      path: '/help',
+    }
   ];
   
   return (
     <div className="w-64 bg-white h-full border-r border-gray-200 hidden md:block">
       <div className="h-full flex flex-col">
+        {/* User Profile Section */}
+        <div className="p-4 border-b border-gray-200">
+          <NavLink 
+            to={profileRoute}
+            className="flex items-center space-x-3 p-3 rounded-md hover:bg-gray-50 transition-colors duration-200"
+          >
+            <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
+              {user?.role === 'entrepreneur' ? (
+                <Building2 size={20} className="text-white" />
+              ) : (
+                <CircleDollarSign size={20} className="text-white" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
+              <p className="text-xs text-gray-500 capitalize truncate">
+                {user.role === 'entrepreneur' ? 'My Startup' : 'My Portfolio'}
+              </p>
+            </div>
+          </NavLink>
+        </div>
+        
         <div className="flex-1 py-4 overflow-y-auto">
+          {/* Main Navigation */}
           <div className="px-3 space-y-1">
-            {sidebarItems.map((item, index) => (
+            {mainNavItems.map((item, index) => (
               <SidebarItem
                 key={index}
-                to={item.to}
+                to={item.path}
                 icon={item.icon}
                 text={item.text}
               />
             ))}
           </div>
           
+          {/* Settings Section */}
           <div className="mt-8 px-3">
             <h3 className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Settings
+              Account
             </h3>
             <div className="mt-2 space-y-1">
-              {commonItems.map((item, index) => (
+              {settingsItems.map((item, index) => (
                 <SidebarItem
                   key={index}
-                  to={item.to}
+                  to={item.path}
                   icon={item.icon}
                   text={item.text}
                 />
@@ -101,13 +157,14 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
         
+        {/* Support Section */}
         <div className="p-4 border-t border-gray-200">
           <div className="bg-gray-50 rounded-md p-3">
             <p className="text-xs text-gray-600">Need assistance?</p>
             <h4 className="text-sm font-medium text-gray-900 mt-1">Contact Support</h4>
             <a 
               href="mailto:support@businessnexus.com" 
-              className="mt-2 inline-flex items-center text-xs font-medium text-primary-600 hover:text-primary-500"
+              className="mt-2 inline-flex items-center text-xs font-medium text-primary-600 hover:text-primary-500 transition-colors duration-200"
             >
               support@businessnexus.com
             </a>

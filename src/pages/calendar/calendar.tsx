@@ -170,7 +170,7 @@ export const CalendarPage: React.FC = () => {
           <button
             onClick={() => setView('calendar')}
             className={`px-4 py-2 rounded-lg transition-colors ${
-              view === 'calendar' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              view === 'calendar' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
             <Calendar className="w-4 h-4 inline mr-2" />
@@ -179,7 +179,7 @@ export const CalendarPage: React.FC = () => {
           <button
             onClick={() => setView('availability')}
             className={`px-4 py-2 rounded-lg transition-colors ${
-              view === 'availability' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              view === 'availability' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
             <Clock className="w-4 h-4 inline mr-2" />
@@ -188,7 +188,7 @@ export const CalendarPage: React.FC = () => {
           <button
             onClick={() => setView('requests')}
             className={`px-4 py-2 rounded-lg transition-colors ${
-              view === 'requests' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              view === 'requests' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
             <Users className="w-4 h-4 inline mr-2" />
@@ -220,7 +220,7 @@ export const CalendarPage: React.FC = () => {
             
             <button
               onClick={() => setShowNewMeetingModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />
               New Meeting
@@ -246,10 +246,10 @@ export const CalendarPage: React.FC = () => {
                   key={`${formatDate(day)}-${index}`}
                   className={`min-h-[100px] p-2 border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors ${
                     !isCurrentMonth ? 'bg-gray-50 text-gray-400' : ''
-                  } ${isToday ? 'bg-blue-50 border-blue-200' : ''}`}
+                  } ${isToday ? 'bg-primary-50 border-primary-200' : ''}`}
                   onClick={() => setSelectedDate(day)}
                 >
-                  <div className={`text-sm font-medium mb-1 ${isToday ? 'text-blue-600' : ''}`}>
+                  <div className={`text-sm font-medium mb-1 ${isToday ? 'text-primary-600' : ''}`}>
                     {day.getDate()}
                   </div>
                   
@@ -263,7 +263,7 @@ export const CalendarPage: React.FC = () => {
                     <div
                       key={meeting.id}
                       className={`text-xs p-1 rounded mb-1 truncate cursor-pointer ${
-                        meeting.status === 'confirmed' ? 'bg-blue-100 text-blue-700' :
+                        meeting.status === 'confirmed' ? 'bg-primary-100 text-primary-700' :
                         meeting.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
                         'bg-gray-100 text-gray-700'
                       }`}
@@ -409,7 +409,7 @@ export const CalendarPage: React.FC = () => {
                   type="text"
                   value={newMeeting.title}
                   onChange={(e) => setNewMeeting({ ...newMeeting, title: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="Enter meeting title"
                 />
               </div>
@@ -421,7 +421,7 @@ export const CalendarPage: React.FC = () => {
                     type="date"
                     value={newMeeting.date}
                     onChange={(e) => setNewMeeting({ ...newMeeting, date: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
                 
@@ -430,7 +430,7 @@ export const CalendarPage: React.FC = () => {
                   <select
                     value={newMeeting.time}
                     onChange={(e) => setNewMeeting({ ...newMeeting, time: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   >
                     <option value="">Select time</option>
                     {timeSlots.map(slot => (
@@ -445,7 +445,7 @@ export const CalendarPage: React.FC = () => {
                 <select
                   value={newMeeting.duration}
                   onChange={(e) => setNewMeeting({ ...newMeeting, duration: parseInt(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value={30}>30 minutes</option>
                   <option value={60}>1 hour</option>
@@ -460,7 +460,7 @@ export const CalendarPage: React.FC = () => {
                   type="text"
                   value={newMeeting.participants}
                   onChange={(e) => setNewMeeting({ ...newMeeting, participants: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="Enter participant emails, separated by commas"
                 />
               </div>
@@ -470,7 +470,7 @@ export const CalendarPage: React.FC = () => {
                 <select
                   value={newMeeting.meetingType}
                   onChange={(e) => setNewMeeting({ ...newMeeting, meetingType: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="video">Video Call</option>
                   <option value="in-person">In Person</option>
@@ -489,7 +489,7 @@ export const CalendarPage: React.FC = () => {
               <button
                 onClick={handleCreateMeeting}
                 disabled={!newMeeting.title || !newMeeting.date || !newMeeting.time}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
               >
                 Create Meeting
               </button>
@@ -519,7 +519,7 @@ export const CalendarPage: React.FC = () => {
                   type="date"
                   value={newAvailabilityDate}
                   onChange={(e) => setNewAvailabilityDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
               
@@ -662,11 +662,11 @@ export const CalendarPage: React.FC = () => {
               {getMeetingsForDate(selectedDate).length > 0 ? (
                 <div className="space-y-2">
                   {getMeetingsForDate(selectedDate).map(meeting => (
-                    <div key={meeting.id} className="p-3 bg-blue-50 rounded-lg">
+                    <div key={meeting.id} className="p-3 bg-primary-50 rounded-lg">
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="font-medium text-blue-900">{meeting.title}</p>
-                          <p className="text-sm text-blue-700">{meeting.time} - {meeting.duration}min</p>
+                          <p className="font-medium text-primary-900">{meeting.title}</p>
+                          <p className="text-sm text-primary-700">{meeting.time} - {meeting.duration}min</p>
                         </div>
                         <span className={`px-2 py-1 text-xs rounded-full ${
                           meeting.status === 'confirmed' ? 'bg-green-100 text-green-700' :
