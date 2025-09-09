@@ -9,8 +9,6 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 
-
-
 // Dashboard Pages
 import { EntrepreneurDashboard } from './pages/dashboard/EntrepreneurDashboard';
 import { InvestorDashboard } from './pages/dashboard/InvestorDashboard';
@@ -27,12 +25,12 @@ import { NotificationsPage } from './pages/notifications/NotificationsPage';
 import { DocumentsPage } from './pages/documents/DocumentsPage';
 import { DocumentChamberPage } from './pages/documentchamber/DocumentChamberPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
+import SecuritySettingsPage from "./pages/securitysettingspage/SecuritySettingsPage"
 import { HelpPage } from './pages/help/HelpPage';
 import { DealsPage } from './pages/deals/DealsPage';
 
 // Payment Pages
-import { PaymentPage } from './pages/payment/payment';
-
+import PaymentPage from "./pages/payment/payment"
 // Calendar Pages
 import { CalendarPage } from './pages/calendar/calendar';
 
@@ -47,9 +45,6 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Security Demo Route - Standalone */}
-          <Route path="/security-demo" element={<SecurityAccessControl />} />
-          
           {/* Authentication Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -108,8 +103,10 @@ function App() {
             <Route index element={<DocumentsPage />} />
           </Route>
           
+          {/* Settings Routes */}
           <Route path="/settings" element={<DashboardLayout />}>
             <Route index element={<SettingsPage />} />
+            <Route path="security" element={<SecuritySettingsPage />} />
           </Route>
           
           <Route path="/help" element={<DashboardLayout />}>
@@ -126,11 +123,11 @@ function App() {
             <Route path=":userId" element={<ChatPage />} />
           </Route>
           
-          {/* Redirect root to security demo or login */}
-          <Route path="/" element={<Navigate to="/security-demo" replace />} />
+          {/* Redirect root to login */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
           
-          {/* Catch all other routes and redirect to security demo */}
-          <Route path="*" element={<Navigate to="/security-demo" replace />} />
+          {/* Catch all other routes and redirect to login */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>
     </AuthProvider>
