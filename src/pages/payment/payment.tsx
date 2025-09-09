@@ -675,3 +675,4 @@ export default function PaymentPage() {
     </div>
   );
 }
+export { PaymentPage };
